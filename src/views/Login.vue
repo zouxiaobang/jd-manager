@@ -83,7 +83,7 @@ export default {
           this.loading = true;
           if (this.form.rememberMe) {
             Cookies.set('username', this.form.username, {expires: 30});
-            Cookies.set('password', this.form.password, {expires: 30});
+            Cookies.set('password', encrypt(this.form.password), {expires: 30});
             Cookies.set('rememberMe', this.form.rememberMe, {expires: 30});
           } else {
             Cookies.remove('username');
