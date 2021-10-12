@@ -41,8 +41,9 @@ export default {
       this.menuData = menuData;
     },
     signOut() {
-      this.$store.dispatch('signOut')
-      this.$router.push({path: '/login'})
+      this.$store.dispatch('signOut').then(() => {
+        this.$router.push({path: '/login'})
+      })
     }
   }
 }
