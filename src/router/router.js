@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Root from "@/Root";
+import StaffHome from "@/views/StaffHome";
+import Staff from "@/views/Staff";
 
 
 Vue.use(VueRouter);
@@ -21,7 +23,28 @@ const staticRoutes = [
                 name: 'home',
                 meta: {
                     title: '首页'
-                }
+                },
+                redirect: {
+                    name: 'staffHome'
+                },
+                children: [
+                    {
+                        path: '/staffhome',
+                        name: 'staffHome',
+                        component: StaffHome,
+                        meta: {
+                            title: '员工计件'
+                        }
+                    },
+                    {
+                        path: '/staff',
+                        name: 'staff',
+                        component: Staff,
+                        meta: {
+                            title: '员工列表'
+                        }
+                    }
+                ]
             }
         ]
     },
