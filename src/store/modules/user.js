@@ -1,5 +1,6 @@
 import {getToken, removeToken, setToken} from "@/main/cookiesJs";
 import {getUserInfo, login, logout} from "@/api/user";
+import store from "@/store/store";
 
 const user = {
     state: {
@@ -12,7 +13,7 @@ const user = {
         SET_TOKEN: (state, token) => {
             state.token = token;
         },
-        SET_USERNAME: (state, username) => {
+        SET_NAME: (state, username) => {
             state.username = username;
         },
         SET_AVATAR: (state, userAvatar) => {
@@ -41,11 +42,11 @@ const user = {
             return new Promise((resolve, reject) => {
                 getUserInfo().then(data => {
                     let username = data.username;
-                    let userAvatar = data. userAvatar;
+                    let avatar = data.userAvatar;
 
-                    commit('SET_USERNAME', username);
-                    commit('SET_AVATAR', userAvatar);
-
+                    commit('SET_NAME', username);
+                    commit('SET_AVATAR', avatar);
+                    console.log(store.state.username);
                     resolve(data);
                 }).catch(err => {
                     reject(err);

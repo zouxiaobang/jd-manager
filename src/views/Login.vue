@@ -94,7 +94,7 @@ export default {
           // 调用登录接口
           this.$store.dispatch('signIn', this.form).then(() => {
             this.$router.push({
-              path: this.redirect || ''
+              path: this.redirect || '/'
             })
           }).catch(() => {
             this.loading = false;
