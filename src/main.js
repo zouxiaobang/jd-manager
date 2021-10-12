@@ -6,6 +6,7 @@ import store from "@/store/store";
 // 加载插件
 import './main/elementUiJs';
 import './router/routerP'
+require('./mock')
 
 
 Vue.config.productionTip = false

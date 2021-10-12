@@ -91,8 +91,14 @@ export default {
             Cookies.remove('rememberMe');
           }
 
-          // todo 调用登录接口
-
+          // 调用登录接口
+          this.$store.dispatch('signIn', this.form).then(() => {
+            this.$router.push({
+              path: this.redirect || ''
+            })
+          }).catch(() => {
+            this.loading = false;
+          })
         }
       })
     }
