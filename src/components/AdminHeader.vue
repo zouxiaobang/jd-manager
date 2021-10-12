@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-header>
-      <el-dropdown v-if="userName">
+      <el-dropdown v-if="userName" style="cursor: pointer">
         <span class="el-dropdown-link" style="color: white">
           {{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -13,7 +13,7 @@
           </el-dropdown-item>
           <el-dropdown-item>个人信息</el-dropdown-item>
           <el-dropdown-item>设置</el-dropdown-item>
-          <el-dropdown-item divided @select="$emit('signOut')">Sign out</el-dropdown-item>
+          <el-dropdown-item divided @click.native="$emit('signOut')">Sign out</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-header>

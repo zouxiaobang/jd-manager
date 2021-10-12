@@ -1,6 +1,5 @@
 import {getToken, removeToken, setToken} from "@/main/cookiesJs";
 import {getUserInfo, login, logout} from "@/api/user";
-import store from "@/store/store";
 
 const user = {
     state: {
@@ -46,7 +45,6 @@ const user = {
 
                     commit('SET_NAME', username);
                     commit('SET_AVATAR', avatar);
-                    console.log(store.state.username);
                     resolve(data);
                 }).catch(err => {
                     reject(err);
@@ -59,7 +57,7 @@ const user = {
             return new Promise((resolve, reject) => {
                 logout().then(() => {
                     commit('SET_TOKEN', '')
-                    commit('SET_USERNAME', '')
+                    commit('SET_NAME', '')
                     commit('SET_AVATAR', '')
                     removeToken()
                     resolve()

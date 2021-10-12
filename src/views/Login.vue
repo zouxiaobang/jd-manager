@@ -58,7 +58,6 @@ export default {
     $route: {
       handler: function(route) {
         this.redirect = route.query && route.query.redirect;
-        console.log(this.redirect)
       },
       immediate: true
     }

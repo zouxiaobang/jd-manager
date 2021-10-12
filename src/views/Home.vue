@@ -42,7 +42,7 @@ export default {
     },
     signOut() {
       this.$store.dispatch('signOut')
-      this.$router.push('/login')
+      this.$router.push({path: '/login'})
     }
   }
 }
