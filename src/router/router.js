@@ -5,6 +5,7 @@ import Home from "@/views/Home";
 import Root from "@/Root";
 import StaffHome from "@/views/StaffHome";
 import Staff from "@/views/Staff";
+import StaffCount from "@/views/StaffCount";
 
 
 Vue.use(VueRouter);
@@ -42,6 +43,15 @@ const staticRoutes = [
                         component: Staff,
                         meta: {
                             title: '员工列表'
+                        }
+                    },
+                    {
+                        path: '/staff/count/:staffId',
+                        name: 'staffCount',
+                        component: StaffCount,
+                        meta: {
+                            title: '员工计件',
+                            params: 'staffId'
                         }
                     }
                 ]
