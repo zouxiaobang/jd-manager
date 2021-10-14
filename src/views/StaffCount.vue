@@ -5,27 +5,51 @@
     <el-divider></el-divider>
 
     <div>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="产品编号">
-          <el-select v-model="selectedProductId" filterable placeholder="请选择"
-                     @change="selectProduct">
-            <el-option v-for="product in productInfos"
-                       :key="product.id"
-                       :label="product.name"
-                       :value="product.id">
-            </el-option>
-          </el-select>
-          <el-tag v-if="selectedProductDesc" style="margin-left: 4px" size="small" type="info">
-            {{ selectedProductDesc }}
-          </el-tag>
-        </el-form-item>
-        <el-form-item label="完成时长">
+      <el-row>
+        <el-col :span="8">
+          <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="产品编号">
+              <el-select v-model="selectedProductId" filterable placeholder="请选择"
+                         @change="selectProduct">
+                <el-option v-for="product in productInfos"
+                           :key="product.id"
+                           :label="product.name"
+                           :value="product.id">
+                </el-option>
+              </el-select>
+              <el-tag v-if="selectedProductDesc" style="margin-left: 4px" size="small" type="info">
+                {{ selectedProductDesc }}
+              </el-tag>
+            </el-form-item>
+            <el-form-item label="完成时长">
+              <el-input-number v-model="productFinishTime" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item label="完成个数">
+              <el-input clearable v-model="productNum" placeholder="请输入个数"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-col>
 
-        </el-form-item>
-        <el-form-item label="个数">
+        <el-col :span="10" :offset="2" v-if="productNum">
+          <div>
+            <el-card>
+              <p>
+                <span class="tip">{{productFinishTime}}</span>
+                天已完成
+                <span class="tip-product-num">{{productNum}}</span>
+                件
+                <span class="tip">{{selectedProduct.name}}</span>
+              </p>
 
-        </el-form-item>
-      </el-form>
+              <p style="margin-top: 50px;text-align: right;">
+                <span class="tip-confirm">请点击确认按钮</span>
+                <el-button type="primary" @click.native="confirm">确认</el-button>
+              </p>
+            </el-card>
+          </div>
+
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -40,9 +64,12 @@ export default {
   data() {
     return {
       form: {},
+      selectedProduct: {},
       selectedProductId: undefined,
       selectedProductDesc: '',
-      productInfos: []
+      productInfos: [],
+      productFinishTime: 1,
+      productNum: undefined
     }
   },
   created() {
@@ -53,6 +80,7 @@ export default {
       fetchProductInfos().then(data => {
         this.productInfos = data || []
         if (data && data.length) {
+          this.selectedProduct = data[0]
           this.selectedProductId = data[0].id
           this.selectedProductDesc = data[0].desc
         }
@@ -61,14 +89,30 @@ export default {
     selectProduct(productId) {
       this.productInfos.forEach(product => {
         if (product.id === productId) {
+          this.selectedProduct = product;
           this.selectedProductDesc = product.desc;
         }
       })
+    },
+    confirm() {
+
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-
+.tip {
+  color: #409EFF;
+}
+.tip-product-num {
+  color: #409EFF;
+  font-size: 60px;
+  font-weight: bold;
+}
+.tip-confirm {
+  color: #707070;
+  font-size: 10px;
+  margin-right: 4px;
+}
 </style>

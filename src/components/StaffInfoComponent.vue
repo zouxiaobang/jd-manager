@@ -9,7 +9,7 @@
           <p class="staffName">{{ staffInfo.name }}</p>
         </div>
       </el-col>
-      <el-col :span="6" :offset="2">
+      <el-col :span="18" :offset="2">
         <el-descriptions :column="2" title="员工信息">
           <el-descriptions-item label="手机号码">{{staffInfo.phone}}</el-descriptions-item>
           <el-descriptions-item label="入职时间">{{staffInfo.onboardingTime}}</el-descriptions-item>

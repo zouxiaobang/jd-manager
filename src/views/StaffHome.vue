@@ -39,7 +39,7 @@ export default {
       })
     },
     selectStaff(staffInfo) {
-      // todo 进入员工计件的操作页面
+      // 进入员工计件的操作页面
       console.log(staffInfo)
       this.$router.push(`/staff/count/` + staffInfo.id)
     },
