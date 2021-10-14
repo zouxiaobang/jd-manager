@@ -136,7 +136,8 @@ export default [
         response: () => {
             return{
                 success: true,
-                data: null
+                data: null,
+                message: '未找到该员工'
             }
         }
     },

@@ -20,17 +20,17 @@
           </el-descriptions-item>
           <el-descriptions-item label="入职时长">{{staffInfo.workTime}} 个月</el-descriptions-item>
           <el-descriptions-item label="角色">
-            <span v-for="item in roles" :key="item.role">
+            <span v-for="item in staffInfo.roles" :key="item.role">
               <el-tag size="small" class="tag-item" effect="plain" type="info">{{item.roleCn}}</el-tag>
             </span>
-            <el-tag size="small" v-if="roles.length === 0" effect="plain" type="info">员工</el-tag>
+            <el-tag size="small" v-if="staffInfo.roles.length === 0" effect="plain" type="info">员工</el-tag>
           </el-descriptions-item>
         </el-descriptions>
       </el-col>
     </el-row>
-    <el-row v-else>
+    <div v-if="showEmpty">
       <el-empty description="查无此员工"></el-empty>
-    </el-row>
+    </div>
   </div>
 </template>
 
@@ -47,8 +47,7 @@ export default {
   data() {
     return {
       showEmpty: false,
-      staffInfo: undefined,
-      roles: []
+      staffInfo: undefined
     }
   },
   created() {
@@ -59,7 +58,6 @@ export default {
       fetchStaffInfo(this.staffId).then(data => {
         this.showEmpty = data === null
         this.staffInfo = data || {}
-        this.roles = data.roles || []
       })
     }
   }
