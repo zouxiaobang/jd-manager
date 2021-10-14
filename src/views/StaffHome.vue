@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="4" v-for="item in staffInfos" :key="item.id">
-        <div class="staffInfo" @click.stop="selectStaff(item)">
+        <div class="staffInfo" @click.stop="selectStaff(item)" @mouseenter="blockFocus(true, $event)" @mouseleave="blockFocus(false, $event)">
           <div class="staffHeader">
             <el-avatar :src="item.avatar" fit="fill" class="staffAvatar"></el-avatar>
           </div>
@@ -41,6 +41,13 @@ export default {
       // todo 进入员工计件的操作页面
       console.log(staffInfo)
       this.$router.push(`/staff/count/` + staffInfo.id)
+    },
+    blockFocus(focus, e) {
+      if (focus) {
+        e.currentTarget.className = 'staffInfoFocus';
+      } else {
+        e.currentTarget.className = 'staffInfo';
+      }
     }
   }
 }
@@ -49,14 +56,24 @@ export default {
 <style scoped>
 .staffInfo {
   display: flex;
-  background-color: #e5e9f2;
+  background-color: white;
   margin: 5px;
   padding: 10px;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px 20px 1px;
+  box-shadow: 1px 2px 1px 0px #409EFF;
   overflow-x: auto;
+  cursor: pointer;
+}
+.staffInfoFocus {
+  display: flex;
+  background-color: #409EFF;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
@@ -78,10 +95,10 @@ export default {
 .staffName {
   width: 50%;
   bottom: 0;
-  color: blue;
+  color: #409EFF;
   font-weight: bold;
   font-size: 18px;
-  background-color: #e5e9f2;
+  background-color: white;
   font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 </style>
