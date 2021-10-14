@@ -6,3 +6,10 @@ export function fetchStaffIntroductions() {
         method: 'get'
     })
 }
+
+export function fetchStaffInfo(id) {
+    return request({
+        url: `/staff/info/${id}`,
+        method: 'get'
+    })
+}

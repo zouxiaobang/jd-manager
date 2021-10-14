@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from "@/store/store";
 import {getToken} from "@/main/cookiesJs";
+import {Message} from "element-ui";
 
 // create an axios instance
 const service = axios.create({
@@ -20,6 +21,7 @@ service.interceptors.request.use(
     },
     error => {
         // do something with request error
+        Message.error(error || 'Error')
         console.log(error)
         return Promise.reject(error)
     }
@@ -33,10 +35,12 @@ service.interceptors.response.use(
         if (res.success) {
             return res.data;
         } else {
+            Message.error(res.message || 'Error')
             return Promise.reject(new Error(res.message || 'Error'))
         }
     },
     error => {
+        Message.error(error || 'Error')
         console.log('err' + error)
         return Promise.reject(error)
     }

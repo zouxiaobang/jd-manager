@@ -6,9 +6,10 @@
           <div class="staffHeader">
             <el-avatar :src="item.avatar" fit="fill" class="staffAvatar"></el-avatar>
           </div>
-          <div class="staffHeader">
-            <el-avatar class="staffName">{{ item.name }}</el-avatar>
-          </div>
+<!--          <div class="staffHeader">-->
+<!--            <el-avatar class="staffName">{{ item.name }}</el-avatar>-->
+<!--          </div>-->
+          <p class="staffName">{{ item.name }}</p>
         </div>
       </el-col>
     </el-row>
@@ -26,7 +27,7 @@ export default {
       staffInfos: []
     }
   },
-  mounted() {
+  created() {
     this.fetchStaffInfo()
   },
   methods: {
@@ -53,7 +54,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .staffInfo {
   display: flex;
   background-color: white;
@@ -62,19 +63,34 @@ export default {
   border-radius: 4px;
   align-items: center;
   justify-content: center;
-  box-shadow: 1px 2px 1px 0px #409EFF;
+  box-shadow: 1px 2px 1px 0px #909399;
   overflow-x: auto;
   cursor: pointer;
+  .staffName {
+    color: #909399;
+    font-weight: bold;
+    margin-left: 1em;
+    font-size: 18px;
+    background-color: white;
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
 }
 .staffInfoFocus {
   display: flex;
-  background-color: #409EFF;
+  background-color: #909399;
   margin: 5px;
   padding: 10px;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  .staffName {
+    color: white;
+    font-weight: bold;
+    margin-left: 1em;
+    font-size: 18px;
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
 }
 
 .staffHeader {
@@ -92,13 +108,4 @@ export default {
   position: absolute;
 }
 
-.staffName {
-  width: 50%;
-  bottom: 0;
-  color: #409EFF;
-  font-weight: bold;
-  font-size: 18px;
-  background-color: white;
-  font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-}
 </style>

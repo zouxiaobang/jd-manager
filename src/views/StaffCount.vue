@@ -1,20 +1,17 @@
 <template>
   <div>
-    {{staffId}}
+    <staff-info-component></staff-info-component>
   </div>
 </template>
 
 <script>
+import StaffInfoComponent from "@/components/StaffInfoComponent";
 export default {
   name: "StaffCount",
-  computed: {
-    staffId() {
-      return this.$route.params.staffId;
-    }
-  }
+  components: {StaffInfoComponent}
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 </style>
