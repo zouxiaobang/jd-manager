@@ -4,8 +4,8 @@ export const menuData = [
         id: 1,
         title: '员工计件',
         icon: '',
-        key: 'staffHome',
-        path: 'staffhome',
+        key: 'staffhome',
+        path: '/staffhome',
         children: []
     },
     {
@@ -20,21 +20,21 @@ export const menuData = [
                 title: '员工列表',
                 icon: '',
                 key: 'staff',
-                path: 'staff'
+                path: '/staff'
             },
             {
                 id: 22,
                 title: '菜单1-2',
                 icon: '',
-                key: 'menu1_2',
-                path: 'menu1_2'
+                key: 'menu12',
+                path: '/menu1_2'
             },
             {
                 id: 23,
                 title: '菜单1-3',
                 icon: '',
-                key: 'menu1_3',
-                path: 'menu1_3'
+                key: 'menu13',
+                path: '/menu1_3'
             }
         ]
     }

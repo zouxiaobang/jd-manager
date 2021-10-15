@@ -1,28 +1,34 @@
 <template>
   <div>
-    <el-menu default-active="staffHome" :collapse="isCollapse">
-      <!-- 目录 支持两级目录 -->
-      <div v-for="item in menuData" :key="item.id">
-        <el-submenu v-if="item.children.length !== 0" :index="item.key">
-          <i :class="item.icon"></i>
-          <span slot="title">{{ item.title }}</span>
-          <el-menu-item-group>
-            <!-- 子菜单 -->
-            <el-menu-item
-                v-for="childItem in item.children"
-                :key="childItem.id"
-                :index="item.key"
-                @click="navRouter(childItem.path)">
-              {{ childItem.title }}
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-menu-item :index="item.key" v-else @click="navRouter(item.path)">
-          <i :class="item.icon"></i>
-          <span slot="title">{{ item.title }}</span>
-        </el-menu-item>
-      </div>
-    </el-menu>
+    <div>
+      <el-menu
+          default-active="staffhome"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b">
+        <el-menu-item-group
+            v-for="item in menuData"
+            :key="item.id">
+          <el-submenu v-if="item.children.length !== 0" :index="item.key">
+            <template slot="title">
+              <i :class="item.icon"></i>
+              <span>{{ item.title }}</span>
+            </template>
+            <el-menu-item-group v-for="childItem in item.children" :key="childItem.id">
+              <el-menu-item :index="childItem.key" @click="navRouter(childItem.path)">
+                {{childItem.title}}
+              </el-menu-item>
+            </el-menu-item-group>
+
+          </el-submenu>
+          <el-menu-item v-else :index="item.key" @click="navRouter(item.path)">
+            <i :class="item.icon"></i>
+            <span>{{ item.title }}</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -39,10 +45,7 @@ export default {
   },
   methods: {
     navRouter(url) {
-      this.$router.push("/" + url);
-    },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      this.$router.push(url);
     }
   }
 }

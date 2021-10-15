@@ -4,8 +4,8 @@
       <admin-header :user-name="username" :user-avatar="userAvatar" @signOut="signOut"></admin-header>
 
       <el-container direction="horizontal">
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-          <admin-menu :menu-data="menuData"></admin-menu>
+        <el-aside width="200px">
+          <admin-menu :menu-data="menuData" :is-collapse="true"></admin-menu>
         </el-aside>
 
         <el-main>
