@@ -6,9 +6,6 @@
           <div class="staffHeader">
             <el-avatar :src="item.avatar" fit="fill" class="staffAvatar"></el-avatar>
           </div>
-<!--          <div class="staffHeader">-->
-<!--            <el-avatar class="staffName">{{ item.name }}</el-avatar>-->
-<!--          </div>-->
           <p class="staffName">{{ item.name }}</p>
         </div>
       </el-col>
