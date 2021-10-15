@@ -1,13 +1,9 @@
 <template>
   <div>
     <el-container class="root" direction="vertical">
-      <admin-header :user-name="username" :user-avatar="userAvatar" @signOut="signOut"></admin-header>
+      <admin-header :user-name="username" :user-avatar="userAvatar" :menu-data="menuData" @signOut="signOut"></admin-header>
 
       <el-container direction="horizontal">
-        <el-aside width="200px">
-          <admin-menu :menu-data="menuData" :is-collapse="true"></admin-menu>
-        </el-aside>
-
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -18,12 +14,11 @@
 
 <script>
 import AdminHeader from "@/components/AdminHeader";
-import AdminMenu from "@/components/AdminMenu";
 import {menuData} from '@/router/menus/menu'
 
 export default {
   name: "Home",
-  components: {AdminMenu, AdminHeader},
+  components: {AdminHeader},
   data() {
     return {
       username: '',
