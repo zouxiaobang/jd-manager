@@ -4,7 +4,7 @@
 
     <el-divider></el-divider>
 
-    <div v-if="staffInfo">
+    <div v-if="!staffInfo && showEmpty">
       <el-row>
         <el-col :span="8">
           <el-form ref="form" :model="form" label-width="80px">
