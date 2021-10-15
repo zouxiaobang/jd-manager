@@ -7,7 +7,7 @@
       </el-col>
 
       <!--      菜单-->
-      <el-col :span="18" offset="1">
+      <el-col :span="18" :offset="1">
         <el-menu
             default-active="staffhome"
             class="el-menu-demo"

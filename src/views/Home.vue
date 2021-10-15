@@ -3,7 +3,8 @@
     <el-container class="root" direction="vertical">
       <admin-header :user-name="username" :user-avatar="userAvatar" :menu-data="menuData" @signOut="signOut"></admin-header>
 
-      <el-container direction="horizontal">
+      <el-container direction="vertical">
+        <admin-breadcrumb></admin-breadcrumb>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -15,10 +16,11 @@
 <script>
 import AdminHeader from "@/components/AdminHeader";
 import {menuData} from '@/router/menus/menu'
+import AdminBreadcrumb from "@/components/AdminBreadcrumb";
 
 export default {
   name: "Home",
-  components: {AdminHeader},
+  components: {AdminBreadcrumb, AdminHeader},
   data() {
     return {
       username: '',
