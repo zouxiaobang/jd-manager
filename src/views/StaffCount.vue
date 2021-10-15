@@ -4,7 +4,7 @@
 
     <el-divider></el-divider>
 
-    <div v-if="!staffInfo && showEmpty">
+    <div v-if="staffInfo && !showEmpty">
       <el-row>
         <el-col :span="8">
           <el-form ref="form" :model="form" label-width="80px">
@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       staffInfo: undefined,
-      showEmpty: false,
+      showEmpty: true,
       form: {},
       selectedProduct: {},
       selectedProductId: undefined,
