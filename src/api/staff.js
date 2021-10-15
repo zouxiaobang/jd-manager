@@ -13,3 +13,18 @@ export function fetchStaffInfo(id) {
         method: 'get'
     })
 }
+
+
+export function addProductCountOfStaff(staffId, productId, finishTime, productNum) {
+    let data = {
+        'staffId': staffId,
+        'productId': productId,
+        'finishTime': finishTime,
+        'productNum': productNum
+    }
+    return request({
+        url: '/staff/product/work',
+        method: 'post',
+        data: data
+    })
+}

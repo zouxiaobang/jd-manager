@@ -34,11 +34,11 @@
           <div>
             <el-card>
               <p>
-                <span class="tip">{{productFinishTime}}</span>
+                <span class="tip">{{ productFinishTime }}</span>
                 天已完成
-                <span class="tip-product-num">{{productNum}}</span>
+                <span class="tip-product-num">{{ productNum }}</span>
                 件
-                <span class="tip">{{selectedProduct.name}}</span>
+                <span class="tip">{{ selectedProduct.name }}</span>
               </p>
 
               <p style="margin-top: 50px;text-align: right;">
@@ -56,8 +56,9 @@
 
 <script>
 import StaffInfoComponent from "@/components/StaffInfoComponent";
-import {fetchProductInfos, addProductCountOfStaff} from "@/api/product";
-import {fetchStaffInfo} from "@/api/staff";
+import {fetchProductInfos} from "@/api/product";
+import {fetchStaffInfo, addProductCountOfStaff} from "@/api/staff";
+import {Message} from "element-ui";
 
 export default {
   name: "StaffCount",
@@ -110,7 +111,11 @@ export default {
       })
     },
     confirm() {
-      addProductCountOfStaff()
+      addProductCountOfStaff(this.staffInfo.id, this.selectedProductId, this.productFinishTime, this.productNum)
+          .then(() => {
+            Message.success("提交成功");
+            this.$router.go(-1)
+          })
     }
   }
 }
@@ -120,11 +125,13 @@ export default {
 .tip {
   color: #409EFF;
 }
+
 .tip-product-num {
   color: #409EFF;
   font-size: 60px;
   font-weight: bold;
 }
+
 .tip-confirm {
   color: #707070;
   font-size: 10px;

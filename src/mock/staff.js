@@ -141,4 +141,15 @@ export default [
             }
         }
     },
+
+    {
+        url: '/staff/product/work',
+        type: 'post',
+        response: () => {
+            return {
+                success: true,
+                data: null
+            }
+        }
+    }
 ]

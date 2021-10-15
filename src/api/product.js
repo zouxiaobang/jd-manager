@@ -7,6 +7,4 @@ export function fetchProductInfos() {
     })
 }
 
-export function addProductCountOfStaff() {
 
-}
