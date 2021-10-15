@@ -1,10 +1,10 @@
 <template>
   <div>
-    <staff-info-component></staff-info-component>
+    <staff-info-component :staff-info="staffInfo" :show-empty="showEmpty"></staff-info-component>
 
     <el-divider></el-divider>
 
-    <div>
+    <div v-if="staffInfo">
       <el-row>
         <el-col :span="8">
           <el-form ref="form" :model="form" label-width="80px">
@@ -56,13 +56,21 @@
 
 <script>
 import StaffInfoComponent from "@/components/StaffInfoComponent";
-import {fetchProductInfos} from "@/api/product";
+import {fetchProductInfos, addProductCountOfStaff} from "@/api/product";
+import {fetchStaffInfo} from "@/api/staff";
 
 export default {
   name: "StaffCount",
   components: {StaffInfoComponent},
+  computed: {
+    staffId() {
+      return this.$route.params.staffId;
+    }
+  },
   data() {
     return {
+      staffInfo: undefined,
+      showEmpty: false,
       form: {},
       selectedProduct: {},
       selectedProductId: undefined,
@@ -74,6 +82,7 @@ export default {
   },
   created() {
     this.fetchProductInfos();
+    this.fetchStaffInfo()
   },
   methods: {
     fetchProductInfos() {
@@ -94,8 +103,14 @@ export default {
         }
       })
     },
+    fetchStaffInfo() {
+      fetchStaffInfo(this.staffId).then(data => {
+        this.showEmpty = data === null
+        this.staffInfo = data || {}
+      })
+    },
     confirm() {
-
+      addProductCountOfStaff()
     }
   }
 }

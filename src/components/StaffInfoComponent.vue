@@ -35,31 +35,12 @@
 </template>
 
 <script>
-import {fetchStaffInfo} from "@/api/staff";
 
 export default {
   name: "StaffInfoComponent",
-  computed: {
-    staffId() {
-      return this.$route.params.staffId;
-    }
-  },
-  data() {
-    return {
-      showEmpty: false,
-      staffInfo: undefined
-    }
-  },
-  created() {
-    this.fetchStaffInfo()
-  },
-  methods: {
-    fetchStaffInfo() {
-      fetchStaffInfo(this.staffId).then(data => {
-        this.showEmpty = data === null
-        this.staffInfo = data || {}
-      })
-    }
+  props: {
+    staffInfo: Object,
+    showEmpty: Boolean
   }
 }
 </script>

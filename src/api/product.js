@@ -6,3 +6,7 @@ export function fetchProductInfos() {
         method: 'get'
     })
 }
+
+export function addProductCountOfStaff() {
+
+}
