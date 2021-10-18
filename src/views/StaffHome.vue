@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :xs="12" :md="6" :lg="4" v-for="item in staffInfos" :key="item.id">
+      <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3" v-for="item in staffInfos" :key="item.id">
         <div class="staffInfo" @click.stop="selectStaff(item)" @mouseenter="blockFocus(true, $event)" @mouseleave="blockFocus(false, $event)">
           <div class="staffHeader">
             <el-avatar :src="item.avatar" fit="fill" class="staffAvatar"></el-avatar>

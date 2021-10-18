@@ -4,7 +4,8 @@
       <admin-header :user-name="username" :user-avatar="userAvatar" :menu-data="menuData" @signOut="signOut"></admin-header>
 
       <el-container direction="vertical">
-        <admin-breadcrumb></admin-breadcrumb>
+        <admin-page-header></admin-page-header>
+        <el-divider></el-divider>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -16,11 +17,11 @@
 <script>
 import AdminHeader from "@/components/AdminHeader";
 import {menuData} from '@/router/menus/menu'
-import AdminBreadcrumb from "@/components/AdminBreadcrumb";
+import AdminPageHeader from "@/components/AdminPageHeader";
 
 export default {
   name: "Home",
-  components: {AdminBreadcrumb, AdminHeader},
+  components: {AdminPageHeader, AdminHeader},
   data() {
     return {
       username: '',
