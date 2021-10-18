@@ -10,12 +10,13 @@ import StaffCount from "@/views/StaffCount";
 
 Vue.use(VueRouter);
 
-const staticRoutes = [
+export const staticRoutes = [
     {
         path: '/',
         redirect: {
             name: 'home'
         },
+        name: 'root',
         component: Root,
         children: [
             {
@@ -23,7 +24,8 @@ const staticRoutes = [
                 component: Home,
                 name: 'home',
                 meta: {
-                    title: '首页'
+                    title: '首页',
+                    isFather: true
                 },
                 redirect: {
                     name: 'staffHome'
@@ -34,7 +36,8 @@ const staticRoutes = [
                         name: 'staffHome',
                         component: StaffHome,
                         meta: {
-                            title: '员工计件'
+                            title: '员工计件平台',
+                            father: 'home'
                         }
                     },
                     {
@@ -42,7 +45,8 @@ const staticRoutes = [
                         name: 'staff',
                         component: Staff,
                         meta: {
-                            title: '员工列表'
+                            title: '员工列表',
+                            father: 'home'
                         }
                     },
                     {
@@ -51,18 +55,24 @@ const staticRoutes = [
                         component: StaffCount,
                         meta: {
                             title: '员工计件',
-                            params: 'staffId'
+                            params: 'staffId',
+                            father: 'home'
                         }
                     }
                 ]
             }
-        ]
+        ],
+        meta: {
+            isFather: true
+        }
     },
     {
         path: '/login',
         component: Login,
+        name: 'login',
         meta: {
-            title: '登录'
+            title: '登录',
+            isFather: true
         }
     }
 ]

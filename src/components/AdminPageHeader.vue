@@ -14,7 +14,11 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      let isFather = this.$route.meta.isFather
+      if (!isFather) {
+        let father = this.$route.meta.father;
+        this.$router.push({name: father})
+      }
     }
   }
 }
