@@ -1,7 +1,7 @@
 <template>
   <div class="page-header">
     <el-row class="row">
-      <el-col :span="2" @click.native="goBack">
+      <el-col :span="2" @click.native="goBack" v-show="showBack">
         <div class="col">
           <i class="el-icon-top icon"></i>
           返回
@@ -25,11 +25,25 @@ export default {
       return this.$route.meta.title;
     }
   },
+  data() {
+    return {
+      showBack: true
+    }
+  },
+  watch: {
+    '$route' (to) {
+      let disshow = to.meta.isFather || false;
+      this.showBack = !disshow
+    }
+  },
+  created() {
+    let disshow = this.$route.meta.isFather || false;
+    this.showBack = !disshow
+  },
   methods: {
     goBack() {
-      let isFather = this.$route.meta.isFather
-      if (!isFather) {
-        let father = this.$route.meta.father;
+      let father = this.$route.meta.father;
+      if (father) {
         this.$router.push({name: father})
       }
     }

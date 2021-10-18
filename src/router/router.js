@@ -37,7 +37,7 @@ export const staticRoutes = [
                         component: StaffHome,
                         meta: {
                             title: '员工计件平台',
-                            father: 'home'
+                            isFather: true
                         }
                     },
                     {
@@ -46,7 +46,7 @@ export const staticRoutes = [
                         component: Staff,
                         meta: {
                             title: '员工列表',
-                            father: 'home'
+                            isFather: true
                         }
                     },
                     {
@@ -55,8 +55,8 @@ export const staticRoutes = [
                         component: StaffCount,
                         meta: {
                             title: '员工计件',
-                            params: 'staffId',
-                            father: 'home'
+                            father: 'home',
+                            params: 'staffId'
                         }
                     }
                 ]
