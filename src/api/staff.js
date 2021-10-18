@@ -28,3 +28,17 @@ export function addProductCountOfStaff(staffId, productId, finishTime, productNu
         data: data
     })
 }
+
+export function fetchStaffInfos(name, phone, workStatus, startTime, endTime) {
+    return request({
+        url: '/staff/list',
+        method: 'get',
+        params: {
+            'name': name,
+            'phone': phone,
+            'workStatus': workStatus,
+            'startTime': startTime,
+            'endTime': endTime
+        }
+    })
+}

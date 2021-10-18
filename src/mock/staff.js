@@ -151,5 +151,58 @@ export default [
                 data: null
             }
         }
+    },
+
+    {
+        url: '/staff/list',
+        type: 'get',
+        response: () => {
+            return {
+                success: true,
+                data: [
+                    {
+                        id: 0,
+                        name: '张三',
+                        phone: '1992732782',
+                        workTime: "19个月",
+                        startWorkDate: '2021-12-22',
+                        statusDesc: '在职',
+                        status: true
+                    },{
+                        id: 1,
+                        name: '李四',
+                        phone: '1992732782',
+                        workTime: "19个月",
+                        startWorkDate: '2021-12-22',
+                        statusDesc: '在职',
+                        status: true
+                    },{
+                        id: 2,
+                        name: '张三',
+                        phone: '1992732782',
+                        workTime: "19个月",
+                        startWorkDate: '2021-12-22',
+                        statusDesc: '在职',
+                        status: true
+                    },{
+                        id: 3,
+                        name: '张三',
+                        phone: '1992732782',
+                        workTime: "19个月",
+                        startWorkDate: '2021-12-22',
+                        statusDesc: '离职',
+                        status: false
+                    },{
+                        id: 4,
+                        name: '张三',
+                        phone: '1992732782',
+                        workTime: "19个月",
+                        startWorkDate: '2021-12-22',
+                        statusDesc: '在职',
+                        status: true
+                    },
+                ]
+            }
+        }
     }
 ]
