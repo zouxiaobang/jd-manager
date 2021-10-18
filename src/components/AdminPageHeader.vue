@@ -1,6 +1,19 @@
 <template>
   <div class="page-header">
-    <el-page-header style="margin-left: 20px" @back="goBack" :content="title"></el-page-header>
+    <el-row class="row">
+      <el-col :span="2" @click.native="goBack">
+        <div class="col">
+          <i class="el-icon-top icon"></i>
+          返回
+          <el-divider direction="vertical" class="divider"></el-divider>
+        </div>
+      </el-col>
+      <el-col :span="22" class="title">
+        {{title}}
+      </el-col>
+    </el-row>
+    <el-row class="divider-out">
+    </el-row>
   </div>
 </template>
 
@@ -25,7 +38,35 @@ export default {
 </script>
 
 <style scoped lang="less">
-.page-header {
-  padding-top: 20px;
+.row {
+  padding: 20px;
+  .col {
+    display: flex;
+    width: 100%;
+    font-size: 14px;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    .icon {
+      align-self: center;
+      margin-right: 6px;
+    }
+    .divider {
+      align-self: end;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+  }
+}
+.title {
+  font-size: 16px;
+  font-family: Georgia, serif;
+}
+.divider-out {
+  height: 1px;
+  background-color: #DCDFE6;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>

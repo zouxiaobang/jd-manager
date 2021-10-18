@@ -5,7 +5,6 @@
 
       <el-container direction="vertical">
         <admin-page-header></admin-page-header>
-        <el-divider></el-divider>
         <el-main>
           <keep-alive>
             <router-view></router-view>
