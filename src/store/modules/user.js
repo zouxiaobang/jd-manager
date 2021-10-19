@@ -4,6 +4,8 @@ import {getUserInfo, login, logout} from "@/api/user";
 const user = {
     state: {
         token: getToken(),
+        refreshToken: '',
+        tokenType: '',
         username: '',
         userAvatar: ''
     },
@@ -11,6 +13,12 @@ const user = {
     mutations: {
         SET_TOKEN: (state, token) => {
             state.token = token;
+        },
+        SET_REFRESH_TOKEN: (state, refreshToken) => {
+            state.refreshToken = refreshToken;
+        },
+        SET_TOKEN_TYPE: (state, tokenType) => {
+            state.tokenType = tokenType;
         },
         SET_NAME: (state, username) => {
             state.username = username;
@@ -27,8 +35,10 @@ const user = {
             let password = userForm.password;
             return new Promise((resolve, reject) => {
                 login(username, password).then(data => {
-                    setToken(data.token);
-                    commit('SET_TOKEN', data.token);
+                    setToken(data.access_token);
+                    commit('SET_TOKEN', data.access_token);
+                    commit('SET_REFRESH_TOKEN', data.refresh_token);
+                    commit('SET_TOKEN_TYPE', data.token_type);
                     resolve();
                 }).catch(err => {
                     reject(err);
