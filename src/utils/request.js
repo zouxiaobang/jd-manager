@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from "@/store/store";
 import {getToken} from "@/main/cookiesJs";
 import {Message} from "element-ui";
 
@@ -13,9 +12,10 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request is sent
+        let token = getToken();
 
-        if (store.getters.token) {
-            config.headers['X-Token'] = getToken()
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token
         }
         return config
     },

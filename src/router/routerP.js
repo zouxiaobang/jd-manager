@@ -27,7 +27,6 @@ router.beforeEach((to, from, next) => {
                     next({...to, replace: true});
                 }).catch(err => {
                     Message.error(err);
-                    next('/')
                 })
             } else {
                 next();
