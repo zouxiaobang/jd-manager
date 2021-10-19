@@ -1,4 +1,4 @@
-import {getToken, removeToken, setToken, setRefreshToken} from "@/main/cookiesJs";
+import {getToken, removeToken, setToken, setRefreshToken, removeRefreshToken} from "@/main/cookiesJs";
 import {getUserInfo, login, logout} from "@/api/user";
 
 const user = {
@@ -61,6 +61,7 @@ const user = {
                     commit('SET_NAME', '')
                     commit('SET_AVATAR', '')
                     removeToken()
+                    removeRefreshToken()
                     resolve()
                 }).catch(err => {
                     reject(err)
