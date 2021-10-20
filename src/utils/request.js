@@ -1,10 +1,11 @@
 import axios from 'axios'
-import {getToken, removeRefreshToken, removeToken} from "@/main/cookiesJs";
-import {Message} from "element-ui";
+import {getToken, isSignOut, removeRefreshToken, removeSignOut, removeToken, setSignOut} from "@/main/cookiesJs";
+import {Message, MessageBox} from "element-ui";
+import router from "@/router/router";
 
 // create an axios instance
 const service = axios.create({
-    baseURL: "/",
+    baseURL: "/api",
     timeout: 5000
 })
 
@@ -43,11 +44,28 @@ service.interceptors.response.use(
         Message.error(error || 'Error')
         console.log(error)
         if (error.response.status === 401) {
-            // token失效
-            removeToken()
-            removeRefreshToken()
-            this.$router.push("/login")
+            if (isSignOut() === undefined || !isSignOut()) {
+              setSignOut(true);
+              MessageBox.confirm('登录已过期，请重新登录', 'tip', {
+                confirmButtonText: '确定',
+                showClose: false,
+                showCancelButton: false,
+                closeOnClickModal: false,
+                type: 'warning'
+              }).then(() => {
+                // token失效
+                removeToken()
+                removeRefreshToken();
+                let currentPath = router.currentRoute.path;
+                if (currentPath !== undefined) {
+                  router.push({path: `/login?redirect=${currentPath}`})
+                } else {
+                  router.push('/login')
+                }
+              })
+            }
         }
+      removeSignOut()
         return Promise.reject(error)
     }
 )
