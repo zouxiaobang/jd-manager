@@ -1,10 +1,10 @@
 import axios from 'axios'
-import {getToken} from "@/main/cookiesJs";
+import {getToken, removeRefreshToken, removeToken} from "@/main/cookiesJs";
 import {Message} from "element-ui";
 
 // create an axios instance
 const service = axios.create({
-    baseURL: "http://localhost:9999",
+    baseURL: "http://localhost:9000",
     timeout: 5000
 })
 
@@ -21,7 +21,6 @@ service.interceptors.request.use(
     },
     error => {
         // do something with request error
-        Message.error(error || 'Error')
         console.log(error)
         return Promise.reject(error)
     }
@@ -30,18 +29,25 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
     response => {
+        console.log(response)
         const res = response.data
 
-        if (res.success) {
+        if (res.code === 200) {
             return res.data;
         } else {
-            Message.error(res.message || 'Error')
-            return Promise.reject(new Error(res.message || 'Error'))
+            Message.error(res.msg || 'Error')
+            return Promise.reject(new Error(res.msg || 'Error'))
         }
     },
     error => {
         Message.error(error || 'Error')
         console.log(error)
+        if (error.response.status === 401) {
+            // token失效
+            removeToken()
+            removeRefreshToken()
+            this.$router.push("/login")
+        }
         return Promise.reject(error)
     }
 )

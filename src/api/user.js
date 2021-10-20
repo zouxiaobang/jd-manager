@@ -7,7 +7,7 @@ export function login(username, password) {
     };
 
     return request({
-        url: '/login',
+        url: '/sign/login',
         method: 'post',
         data: data
     })
@@ -22,7 +22,7 @@ export function getUserInfo() {
 
 export function logout() {
     return request({
-        url: '/logout',
+        url: '/sign/logout',
         method: 'get'
     })
 }
