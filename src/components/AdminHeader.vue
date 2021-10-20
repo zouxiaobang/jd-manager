@@ -9,7 +9,7 @@
       <!--      菜单-->
       <el-col :span="18" :offset="1">
         <el-menu
-            default-active="staffhome"
+            :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             background-color="#545c64"
@@ -76,6 +76,9 @@ export default {
     },
     menuData: {
       type: Array
+    },
+    activeIndex: {
+      type: String
     }
   },
   methods: {

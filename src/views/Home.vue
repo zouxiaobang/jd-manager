@@ -1,7 +1,11 @@
 <template>
   <div>
     <el-container class="root" direction="vertical">
-      <admin-header :user-name="username" :user-avatar="userAvatar" :menu-data="menuData" @signOut="signOut"></admin-header>
+      <admin-header :user-name="username"
+                    :user-avatar="userAvatar"
+                    :menu-data="menuData"
+                    :active-index="activeIndex"
+                    @signOut="signOut"></admin-header>
 
       <el-container direction="vertical">
         <admin-page-header></admin-page-header>
@@ -25,11 +29,15 @@ export default {
     return {
       username: '',
       userAvatar: '',
-      menuData: []
+      menuData: [],
+      activeIndex: '/staffhome'
     }
   },
   created() {
     this.initData();
+  },
+  mounted() {
+    this.activeIndex = this.$route.path
   },
   methods: {
     initData() {
