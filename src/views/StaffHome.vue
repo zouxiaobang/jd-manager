@@ -19,7 +19,7 @@
       </el-col>
     </el-row>
     <el-pagination
-      v-if="staffInfos && staffInfos.length !== 0 && staffInfos.length > pageSize"
+      v-if="staffInfos && staffInfos.length !== 0 && total > pageSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
