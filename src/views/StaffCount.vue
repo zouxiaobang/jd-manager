@@ -21,6 +21,19 @@
                 {{ selectedProductDesc }}
               </el-tag>
             </el-form-item>
+            <el-form-item label="产品批次">
+              <el-select v-model="selectedProductBatchId" filterable placeholder="请选择"
+                         @change="selectProductBatch">
+                <el-option v-for="productBatch in productBatchs"
+                           :key="productBatch.id"
+                           :label="productBatch.batchName"
+                           :value="productBatch.id">
+                </el-option>
+              </el-select>
+              <el-tag style="margin-left: 4px" size="small" type="info" v-model="price">
+                单价 {{ price }}
+              </el-tag>
+            </el-form-item>
             <el-form-item label="完成时长">
               <el-input-number v-model="productFinishTime" :min="0"></el-input-number>
             </el-form-item>
@@ -39,6 +52,13 @@
                 <span class="tip-product-num">{{ productNum }}</span>
                 件
                 <span class="tip">{{ selectedProduct.name }}</span>
+                （批次：
+                <span class="tip">{{ selectedProductBatch.batchName }}</span>）
+              </p>
+              <p style="margin-top: 8px">
+                金额
+                <span class="tip-product-num">{{ parseFloat(productNum * price).toFixed(2) }}</span>
+                元
               </p>
 
               <p style="margin-top: 50px;text-align: right;">
@@ -56,7 +76,7 @@
 
 <script>
 import StaffInfoComponent from "@/components/StaffInfoComponent";
-import {fetchProductInfos} from "@/api/product";
+import {fetchProductBatch, fetchProductInfos} from "@/api/product";
 import {fetchStaffInfo, addProductCountOfStaff} from "@/api/staff";
 import {Message} from "element-ui";
 
@@ -78,7 +98,11 @@ export default {
       selectedProductDesc: '',
       productInfos: [],
       productFinishTime: 1,
-      productNum: undefined
+      productNum: undefined,
+      productBatchs: [],
+      selectedProductBatchId: undefined,
+      selectedProductBatch: {},
+      price: undefined
     }
   },
   created() {
@@ -89,10 +113,25 @@ export default {
     fetchProductInfos() {
       fetchProductInfos().then(data => {
         this.productInfos = data || []
-        if (data && data.length) {
-          this.selectedProduct = data[0]
-          this.selectedProductId = data[0].id
-          this.selectedProductDesc = data[0].desc
+        if (this.productInfos.length) {
+          this.selectedProduct = this.productInfos[0]
+          this.selectedProductId = this.productInfos[0].id
+          this.selectedProductDesc = this.productInfos[0].desc
+        }
+        this.fetchProductBatch()
+      })
+    },
+    fetchProductBatch() {
+      fetchProductBatch(this.selectedProductId).then(data => {
+        this.productBatchs = data || []
+        if (this.productBatchs.length) {
+          this.selectedProductBatch = this.productBatchs[0];
+          this.selectedProductBatchId = this.productBatchs[0].id;
+          this.price = this.productBatchs[0].price;
+        } else {
+          this.selectedProductBatch = {};
+          this.selectedProductBatchId = undefined;
+          this.price = undefined;
         }
       })
     },
@@ -101,6 +140,7 @@ export default {
         if (product.id === productId) {
           this.selectedProduct = product;
           this.selectedProductDesc = product.desc;
+          this.fetchProductBatch()
         }
       })
     },
@@ -108,6 +148,14 @@ export default {
       fetchStaffInfo(this.staffId).then(data => {
         this.showEmpty = data === null
         this.staffInfo = data || {}
+      })
+    },
+    selectProductBatch(batchId) {
+      this.productBatchs.forEach(batch => {
+        if (batch.id === batchId) {
+          this.selectedProductBatch = batch;
+          this.price = batch.price;
+        }
       })
     },
     confirm() {

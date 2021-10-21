@@ -7,4 +7,9 @@ export function fetchProductInfos() {
     })
 }
 
-
+export function fetchProductBatch(productId) {
+  return request({
+    url: `/product/batch/${productId}`,
+    method: 'get'
+  })
+}
