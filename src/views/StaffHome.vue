@@ -1,6 +1,14 @@
 <template>
   <div>
     <el-row>
+      <el-col :span="4">
+        <el-input v-model="staffName" placeholder="请输入姓名" @keyup.enter.native="search" clearable @clear="search"></el-input>
+      </el-col>
+      <el-col :span="3">
+        <el-button type="primary" @click="search">搜索</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3" v-for="item in staffInfos" :key="item.id">
         <div class="staffInfo" @click.stop="selectStaff(item)" @mouseenter="blockFocus(true, $event)" @mouseleave="blockFocus(false, $event)">
           <div class="staffHeader">
@@ -10,6 +18,16 @@
         </div>
       </el-col>
     </el-row>
+    <el-pagination
+      v-if="staffInfos && staffInfos.length !== 0 && staffInfos.length > pageSize"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[24, 48, 72, 96, 120]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -21,7 +39,11 @@ export default {
   name: "StaffHome",
   data() {
     return {
-      staffInfos: []
+      staffInfos: [],
+      currentPage: 1,
+      pageSize: 24,
+      total: 0,
+      staffName: ''
     }
   },
   created() {
@@ -29,8 +51,10 @@ export default {
   },
   methods: {
     fetchStaffInfo() {
-      fetchStaffIntroductions().then(data => {
-        this.staffInfos = data || [];
+      fetchStaffIntroductions(this.staffName, this.currentPage - 1, this.pageSize).then(data => {
+        let pageVo = data || {};
+        this.total = pageVo.total || 0;
+        this.staffInfos = pageVo.content || [];
       }).catch(err => {
         Message.error(err)
       })
@@ -46,6 +70,18 @@ export default {
       } else {
         e.currentTarget.className = 'staffInfo';
       }
+    },
+
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.fetchStaffInfo();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.fetchStaffInfo();
+    },
+    search() {
+      this.fetchStaffInfo();
     }
   }
 }
