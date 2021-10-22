@@ -91,6 +91,7 @@
           fixed="right">
         <el-button type="text">查看</el-button>
         <el-button type="text">编辑</el-button>
+        <el-button type="text">删除</el-button>
       </el-table-column>
     </el-table>
     <el-pagination
