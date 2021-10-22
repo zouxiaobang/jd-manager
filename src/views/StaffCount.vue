@@ -34,7 +34,7 @@
                 单价 {{ price }}
               </el-tag>
             </el-form-item>
-            <el-form-item label="完成时长">
+            <el-form-item label="已用天数">
               <el-input-number v-model="productFinishTime" :min="0"></el-input-number>
             </el-form-item>
             <el-form-item label="完成个数">
@@ -76,9 +76,9 @@
 
 <script>
 import StaffInfoComponent from "@/components/StaffInfoComponent";
-import {fetchProductBatch, fetchProductInfos} from "@/api/product";
+import {checkBatchStatus, fetchProductBatch, fetchProductInfos} from "@/api/product";
 import {fetchStaffInfo, addProductCountOfStaff} from "@/api/staff";
-import {Message} from "element-ui";
+import {Message, MessageBox} from "element-ui";
 
 export default {
   name: "StaffCount",
@@ -159,11 +159,36 @@ export default {
       })
     },
     confirm() {
-      addProductCountOfStaff(this.staffInfo.id, this.selectedProductId, this.productFinishTime, this.productNum)
-          .then(() => {
-            Message.success("提交成功");
-            this.$router.go(-1)
-          })
+      if (this.selectedProductBatchId) {
+        checkBatchStatus(this.selectedProductBatchId, this.productNum).then(data => {
+          if (data.finishStatus) {
+            MessageBox.confirm(data.message, 'tip', {
+              confirmButtonText: '确定',
+              showClose: true,
+              showCancelButton: true,
+              closeOnClickModal: false,
+              type: 'warning'
+            }).then(() => {
+              this.recordProductCount()
+            })
+          } else {
+            this.recordProductCount()
+          }
+        })
+      } else {
+        this.recordProductCount()
+      }
+    },
+    recordProductCount() {
+      let amount = null;
+      if (this.price) {
+        amount = parseFloat(this.productNum * this.price).toFixed(2);
+      }
+      addProductCountOfStaff(this.staffInfo.id, this.selectedProductId, this.productFinishTime, this.productNum, this.selectedProductBatchId, amount)
+        .then(() => {
+          Message.success("提交成功");
+          this.$router.back()
+        })
     }
   }
 }

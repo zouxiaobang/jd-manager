@@ -53,7 +53,7 @@ export default {
     fetchStaffInfo() {
       fetchStaffIntroductions(this.staffName, this.currentPage - 1, this.pageSize).then(data => {
         let pageVo = data || {};
-        this.total = pageVo.total || 0;
+        this.total = Number(pageVo.total);
         this.staffInfos = pageVo.content || [];
       }).catch(err => {
         Message.error(err)

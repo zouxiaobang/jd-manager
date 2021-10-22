@@ -20,12 +20,14 @@ export function fetchStaffInfo(id) {
 }
 
 
-export function addProductCountOfStaff(staffId, productId, finishTime, productNum) {
+export function addProductCountOfStaff(staffId, productId, finishTime, productNum, batchId, amount) {
   let data = {
     'staffId': staffId,
     'productId': productId,
     'finishTime': finishTime,
-    'productNum': productNum
+    'productNum': productNum,
+    'batchId': batchId,
+    'amount': amount
   }
   return request({
     url: '/staff/product/work',

@@ -13,3 +13,14 @@ export function fetchProductBatch(productId) {
     method: 'get'
   })
 }
+
+export function checkBatchStatus(batchId, finishNum) {
+  return request({
+    url: '/product/check/batch/status',
+    method: 'get',
+    params: {
+      'batchId': batchId,
+      'finishNum': finishNum
+    }
+  })
+}
