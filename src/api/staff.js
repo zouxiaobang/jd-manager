@@ -36,11 +36,13 @@ export function addProductCountOfStaff(staffId, productId, finishTime, productNu
   })
 }
 
-export function fetchStaffInfos(name, phone, workStatus, startTime, endTime) {
+export function fetchStaffInfos(offset, limit, name, phone, workStatus, startTime, endTime) {
   return request({
     url: '/staff/list',
     method: 'get',
     params: {
+      'offset': offset,
+      'limit': limit,
       'name': name,
       'phone': phone,
       'workStatus': workStatus,

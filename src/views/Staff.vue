@@ -29,8 +29,9 @@
       <el-col :xs="24" :sm="16" :md="12" :lg="8" :xl="6" class="search-input">
         <el-date-picker
             v-model="timeValue"
-            type="datetimerange"
+            type="daterange"
             :picker-options="pickerOptions"
+            value-format="yyyy-MM-dd"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
@@ -39,7 +40,7 @@
       </el-col>
 
       <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3" class="search-input">
-        <el-button type="primary">搜索</el-button>
+        <el-button type="primary" @click="search">搜索</el-button>
       </el-col>
     </el-row>
 
@@ -76,7 +77,7 @@
           width="120">
       </el-table-column>
       <el-table-column
-          property="startWorkDate"
+          property="onboardingTime"
           label="入职时间"
           width="220">
       </el-table-column>
@@ -92,6 +93,16 @@
         <el-button type="text">编辑</el-button>
       </el-table-column>
     </el-table>
+    <el-pagination
+      v-if="staffInfos && staffInfos.length !== 0 && total > pageSize"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 30, 40, 50]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -135,7 +146,9 @@ export default {
           }
         }]
       },
-
+      currentPage: 1,
+      pageSize: 10,
+      total: 0,
     }
   },
   created() {
@@ -145,14 +158,29 @@ export default {
     fetchStaffInfos() {
       let startTime = this.timeValue.length > 0 ? this.timeValue[0] : null;
       let endTime = this.timeValue.length > 1 ? this.timeValue[1] : null;
-      fetchStaffInfos(this.staffName, this.staffPhone, this.workValue, startTime, endTime).then(data => {
-        this.staffInfos = data || []
+      fetchStaffInfos(this.currentPage - 1, this.pageSize, this.staffName, this.staffPhone, this.workValue, startTime, endTime).then(data => {
+        let pageVo = data || {};
+        this.total = Number(pageVo.total);
+        this.staffInfos = pageVo.content || [];
       })
     },
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
       console.log(this.multipleSelection)
+    },
+
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.fetchStaffInfos();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.fetchStaffInfos();
+    },
+
+    search() {
+      this.fetchStaffInfos();
     }
   }
 }
