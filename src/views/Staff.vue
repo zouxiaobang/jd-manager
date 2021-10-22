@@ -62,6 +62,11 @@
           width="50">
       </el-table-column>
       <el-table-column
+        v-if="false"
+        property="id"
+        width="50">
+      </el-table-column>
+      <el-table-column
           property="name"
           label="姓名"
           width="120">
@@ -89,9 +94,11 @@
       <el-table-column
           label="操作"
           fixed="right">
-        <el-button type="text">查看</el-button>
-        <el-button type="text">编辑</el-button>
-        <el-button type="text">删除</el-button>
+        <template slot-scope="scope">
+          <el-button type="text">查看</el-button>
+          <el-button type="text">编辑</el-button>
+          <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -108,7 +115,10 @@
 </template>
 
 <script>
-import {fetchStaffInfos} from "@/api/staff";
+import {deleteStaffById, fetchStaffInfos} from "@/api/staff";
+import {Message, MessageBox} from "element-ui";
+import {removeRefreshToken, removeToken} from "@/main/cookiesJs";
+import router from "@/router/router";
 
 export default {
   name: "Staff",
@@ -182,6 +192,22 @@ export default {
 
     search() {
       this.fetchStaffInfos();
+    },
+
+    deleteSingle(row) {
+      MessageBox.confirm('确认删除用户' + row.name, 'tip', {
+        confirmButtonText: '确定',
+        showClose: true,
+        showCancelButton: true,
+        closeOnClickModal: false,
+        type: 'info'
+      }).then(() => {
+        deleteStaffById(row.id).then(() => {
+          Message.success('删除员工成功');
+          this.fetchStaffInfos()
+        })
+      })
+
     }
   }
 }

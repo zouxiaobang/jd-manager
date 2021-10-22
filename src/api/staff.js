@@ -51,3 +51,10 @@ export function fetchStaffInfos(offset, limit, name, phone, workStatus, startTim
     }
   })
 }
+
+export function deleteStaffById(staffId) {
+  return request({
+    url: `/staff/${staffId}`,
+    method: 'delete'
+  })
+}
