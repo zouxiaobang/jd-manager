@@ -48,6 +48,7 @@
       <el-button type="primary" @click="addStaff">新增</el-button>
       <el-button type="danger" @click="deleteMulti">删除</el-button>
       <el-button>批量新增</el-button>
+      <el-button type="warning" >工资月结</el-button>
     </el-row>
     <el-table
       :data="staffInfos"
@@ -93,9 +94,15 @@
         width="120">
       </el-table-column>
       <el-table-column
+        property="notPayAmount"
+        label="未结工资"
+        width="120">
+      </el-table-column>
+      <el-table-column
         label="操作"
         fixed="right">
         <template slot-scope="scope">
+          <el-button type="text">工资月结</el-button>
           <el-button type="text">查看</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
