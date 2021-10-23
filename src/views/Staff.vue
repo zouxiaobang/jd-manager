@@ -46,12 +46,13 @@
 
     <el-row>
       <el-button type="primary" @click="addStaff">新增</el-button>
-      <el-button type="danger">删除</el-button>
+      <el-button type="danger" @click="deleteMulti">删除</el-button>
       <el-button>批量新增</el-button>
     </el-row>
     <el-table
       :data="staffInfos"
       stripe
+      ref="staffInfoTable"
       style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
@@ -78,7 +79,7 @@
       </el-table-column>
       <el-table-column
         property="workTime"
-        label="工龄"
+        label="工龄（天）"
         width="120">
       </el-table-column>
       <el-table-column
@@ -96,7 +97,6 @@
         fixed="right">
         <template slot-scope="scope">
           <el-button type="text">查看</el-button>
-          <el-button type="text">编辑</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import {deleteStaffById, fetchStaffInfos} from "@/api/staff";
+import {deleteMultiStaff, deleteStaffById, fetchStaffInfos} from "@/api/staff";
 import {Message, MessageBox} from "element-ui";
 import AdminDialog from "@/components/AdminDialog";
 import StaffAddForm from "@/components/staff/StaffAddForm";
@@ -216,6 +216,23 @@ export default {
           this.fetchStaffInfos()
         })
       })
+    },
+
+    deleteMulti() {
+      MessageBox.confirm('确认删除用户', 'tip', {
+        confirmButtonText: '确定',
+        showClose: true,
+        showCancelButton: true,
+        closeOnClickModal: false,
+        type: 'info'
+      }).then(() => {
+        let selections = this.$refs.staffInfoTable.selection;
+        let staffIds = selections.map(selection => selection.id);
+        deleteMultiStaff(staffIds).then(() => {
+          Message.success('删除员工成功');
+          this.fetchStaffInfos()
+        })
+      });
     },
 
     addStaff() {

@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import staff from "@/mock/staff";
 
 export function fetchStaffIntroductions(staffName, offset, limit) {
   return request({
@@ -73,5 +74,13 @@ export function createStaff(staffForm) {
     url: '/staff',
     method: 'post',
     data: data
+  })
+}
+
+export function deleteMultiStaff(staffIds) {
+  return request({
+    url: '/staff',
+    method: 'delete',
+    data: staffIds
   })
 }
