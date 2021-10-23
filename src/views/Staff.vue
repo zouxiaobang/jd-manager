@@ -111,8 +111,10 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
-    <admin-dialog title="创建员工信息" :dialog-visible="dialogAddStaffVisible" @onDialogClosed="onDialogClosed">
-      <staff-add-form></staff-add-form>
+    <admin-dialog title="创建员工信息" :dialog-visible="dialogAddStaffVisible"
+                  @onConfirmBtnClick="onConfirmBtnClick"
+                  @onDialogClosed="onDialogClosed">
+      <staff-add-form ref="staffAddFrom"></staff-add-form>
     </admin-dialog>
 
   </div>
@@ -223,6 +225,15 @@ export default {
     onDialogClosed() {
       this.dialogAddStaffVisible = false;
     },
+
+    onConfirmBtnClick() {
+      this.$refs.staffAddFrom.confirmCreate().then(isSuccess => {
+        if (isSuccess) {
+          this.dialogAddStaffVisible = false;
+          this.fetchStaffInfos()
+        }
+      })
+    }
   }
 }
 </script>

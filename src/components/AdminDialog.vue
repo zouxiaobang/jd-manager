@@ -4,7 +4,7 @@
       <slot></slot>
       <div slot="footer" class="dialog-footer">
         <el-button v-if="showCancelBtn" @click="closeDialog">{{ cancelText }}</el-button>
-        <el-button v-if="showConfirmBtn" type="primary" @click="closeDialog">{{ confirmText }}</el-button>
+        <el-button v-if="showConfirmBtn" type="primary" @click="confirm">{{ confirmText }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -50,6 +50,12 @@ export default {
     // 关闭对话框
     closeDialog() {
       this.$emit('onDialogClosed')
+    },
+
+    // 确认按钮
+    confirm() {
+      console.log('onConfirmBtnClick')
+      this.$emit('onConfirmBtnClick')
     }
   }
 }

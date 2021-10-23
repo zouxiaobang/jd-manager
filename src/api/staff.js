@@ -58,3 +58,20 @@ export function deleteStaffById(staffId) {
     method: 'delete'
   })
 }
+
+export function createStaff(staffForm) {
+  let data = {
+    'startWorkTime': staffForm.startWorkTime,
+    'notPayAmount': staffForm.notPayAmount,
+    'totalAmount': staffForm.allAmount,
+    'userId': staffForm.id,
+    'username': staffForm.username,
+    'phone': staffForm.phone,
+    'roleIds': staffForm.roleIds
+  };
+  return request({
+    url: '/staff',
+    method: 'post',
+    data: data
+  })
+}
