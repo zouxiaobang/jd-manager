@@ -120,8 +120,19 @@
             :fetch-suggestions="userNameChanged"
             :trigger-on-focus="false"
             placeholder="请输入内容"
+            @blur="staffUsernameCheckBlur"
             @select="checkUserName"></el-autocomplete>
+          <el-button v-if="usernameValid" type="success" icon="el-icon-check" circle size="mini"></el-button>
+          <el-popover
+            v-if="showUsernameError"
+            placement="top-start"
+            width="200"
+            trigger="hover"
+            :content="usernameErrorMsg">
+            <el-button slot="reference" type="danger" icon="el-icon-close" circle size="mini"></el-button>
+          </el-popover>
         </el-form-item>
+
         <el-form-item label="活动区域" :label-width="formLabelWidth">
           <el-select v-model="addStaffForm.region" placeholder="请选择活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
@@ -260,7 +271,6 @@ export default {
     },
 
     checkUserName() {
-      console.log(this.addStaffForm.name)
       if (this.addStaffForm.name) {
         checkStaffUsername(this.addStaffForm.name).then(data => {
           if (data) {
@@ -277,7 +287,13 @@ export default {
         this.usernameErrorMsg = '请输入员工名称'
       }
     },
-
+    staffUsernameCheckBlur() {
+      if (!this.addStaffForm.name) {
+        this.usernameValid = false;
+        this.showUsernameError = true;
+        this.usernameErrorMsg = '请输入员工名称'
+      }
+    }
   }
 }
 </script>
