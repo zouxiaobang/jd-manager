@@ -111,50 +111,22 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    <admin-dialog title="创建员工信息" :dialog-visible="dialogAddStaffVisible" @onDialogClosed="onDialogClosed">
+      <staff-add-form></staff-add-form>
+    </admin-dialog>
 
-    <el-dialog title="创建员工信息" :visible.sync="dialogFormVisible">
-      <el-form :model="addStaffForm">
-        <el-form-item label="员工名称" :label-width="formLabelWidth">
-          <el-autocomplete
-            v-model="addStaffForm.name"
-            :fetch-suggestions="userNameChanged"
-            :trigger-on-focus="false"
-            placeholder="请输入内容"
-            @blur="staffUsernameCheckBlur"
-            @select="checkUserName"></el-autocomplete>
-          <el-button v-if="usernameValid" type="success" icon="el-icon-check" circle size="mini"></el-button>
-          <el-popover
-            v-if="showUsernameError"
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            :content="usernameErrorMsg">
-            <el-button slot="reference" type="danger" icon="el-icon-close" circle size="mini"></el-button>
-          </el-popover>
-        </el-form-item>
-
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="addStaffForm.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import {deleteStaffById, fetchStaffInfos} from "@/api/staff";
 import {Message, MessageBox} from "element-ui";
-import {blurryName, checkStaffUsername} from "@/api/user";
+import AdminDialog from "@/components/AdminDialog";
+import StaffAddForm from "@/components/staff/StaffAddForm";
 
 export default {
   name: "Staff",
+  components: {StaffAddForm, AdminDialog},
   data() {
     return {
       staffInfos: [],
@@ -193,13 +165,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      dialogFormVisible: false,
-      formLabelWidth: '120px',
-      addStaffForm: {},
-      userInfos: [],
-      usernameValid: false,
-      showUsernameError: false,
-      usernameErrorMsg: '该员工已存在',
+      dialogAddStaffVisible: false,
     }
   },
   created() {
@@ -235,10 +201,6 @@ export default {
       this.fetchStaffInfos();
     },
 
-    addStaff() {
-      this.dialogFormVisible = true;
-    },
-
     deleteSingle(row) {
       MessageBox.confirm('确认删除用户' + row.name, 'tip', {
         confirmButtonText: '确定',
@@ -254,46 +216,13 @@ export default {
       })
     },
 
-    userNameChanged(query, cb) {
-      if (query && query !== '') {
-        blurryName(query).then(data => {
-          this.userInfos = data || [];
-          let transferData = this.userInfos.map(function (userInfo){
-            return {'value': userInfo.username, 'id': userInfo.id};
-          });
-          cb(transferData)
-          if (this.userInfos.length > 0) {
-
-          }
-          this.checkUserName();
-        });
-      }
+    addStaff() {
+      this.dialogAddStaffVisible = true;
     },
 
-    checkUserName() {
-      if (this.addStaffForm.name) {
-        checkStaffUsername(this.addStaffForm.name).then(data => {
-          if (data) {
-            this.usernameValid = true;
-            this.showUsernameError = false;
-          } else {
-            this.usernameValid = false;
-            this.showUsernameError = true;
-          }
-        })
-      } else {
-        this.usernameValid = false;
-        this.showUsernameError = true;
-        this.usernameErrorMsg = '请输入员工名称'
-      }
+    onDialogClosed() {
+      this.dialogAddStaffVisible = false;
     },
-    staffUsernameCheckBlur() {
-      if (!this.addStaffForm.name) {
-        this.usernameValid = false;
-        this.showUsernameError = true;
-        this.usernameErrorMsg = '请输入员工名称'
-      }
-    }
   }
 }
 </script>

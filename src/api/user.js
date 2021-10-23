@@ -46,3 +46,10 @@ export function checkStaffUsername(name) {
     }
   })
 }
+
+export function getUserById(id) {
+  return request({
+    url: `/user/${id}`,
+    method: 'get'
+  })
+}
