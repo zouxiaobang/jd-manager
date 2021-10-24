@@ -48,13 +48,13 @@
       <el-button type="primary" @click="addStaff">新增</el-button>
       <el-button type="danger" @click="deleteMulti">删除</el-button>
       <el-button>批量新增</el-button>
-      <el-button type="warning" >工资月结</el-button>
+      <el-button type="warning" @click="settleMulti">工资结算</el-button>
     </el-row>
     <el-table
       :data="staffInfos"
       stripe
       ref="staffInfoTable"
-      style="width: 100%" @selection-change="handleSelectionChange">
+      style="width: 100%">
       <el-table-column
         type="selection"
         width="50">
@@ -102,7 +102,7 @@
         label="操作"
         fixed="right">
         <template slot-scope="scope">
-          <el-button type="text">工资月结</el-button>
+          <el-button type="text" @click="settle">工资结算</el-button>
           <el-button type="text">查看</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
@@ -143,7 +143,6 @@ export default {
       staffPhone: '',
       timeValue: [],
       workValue: 2,
-      multipleSelection: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -181,6 +180,7 @@ export default {
     this.fetchStaffInfos();
   },
   methods: {
+    // 查询员工列表
     fetchStaffInfos() {
       let startTime = this.timeValue.length > 0 ? this.timeValue[0] : null;
       let endTime = this.timeValue.length > 1 ? this.timeValue[1] : null;
@@ -191,25 +191,24 @@ export default {
       })
     },
 
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-      console.log(this.multipleSelection)
-    },
-
+    // 分页插件每页个数选择
     handleSizeChange(val) {
       this.pageSize = val;
       this.fetchStaffInfos();
     },
 
+    // 分页插件页数选择
     handleCurrentChange(val) {
       this.currentPage = val;
       this.fetchStaffInfos();
     },
 
+    // 模糊匹配搜索
     search() {
       this.fetchStaffInfos();
     },
 
+    // 单条删除
     deleteSingle(row) {
       MessageBox.confirm('确认删除用户' + row.name, 'tip', {
         confirmButtonText: '确定',
@@ -225,6 +224,7 @@ export default {
       })
     },
 
+    // 多条删除
     deleteMulti() {
       MessageBox.confirm('确认删除用户', 'tip', {
         confirmButtonText: '确定',
@@ -242,14 +242,27 @@ export default {
       });
     },
 
+    // 新增员工
     addStaff() {
       this.dialogAddStaffVisible = true;
     },
 
+    // 单条月结
+    settle() {
+
+    },
+
+    // 多条月结
+    settleMulti() {
+
+    },
+
+    // 新增Dialog关闭事件监听
     onDialogClosed() {
       this.dialogAddStaffVisible = false;
     },
 
+    // 新增Dialog完成事件监听
     onConfirmBtnClick() {
       this.$refs.staffAddFrom.confirmCreate().then(isSuccess => {
         if (isSuccess) {
