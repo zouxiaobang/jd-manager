@@ -102,7 +102,7 @@
         label="操作"
         fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="settle">工资结算</el-button>
+          <el-button type="text" @click="settle" :disabled="!scope.row.canSettle">工资结算</el-button>
           <el-button type="text">查看</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
