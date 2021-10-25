@@ -102,7 +102,7 @@
         label="操作"
         fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="settle" :disabled="!scope.row.canSettle">工资结算</el-button>
+          <el-button type="text" @click="settle(scope.row)" :disabled="!scope.row.canSettle">工资结算</el-button>
           <el-button type="text">查看</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
@@ -128,10 +128,12 @@
 </template>
 
 <script>
-import {deleteMultiStaff, deleteStaffById, fetchStaffInfos} from "@/api/staff";
+import {deleteMultiStaff, deleteStaffById, fetchStaffInfos, settleMulti, settleSingle} from "@/api/staff";
 import {Message, MessageBox} from "element-ui";
 import AdminDialog from "@/components/AdminDialog";
 import StaffAddForm from "@/components/staff/StaffAddForm";
+import {removeRefreshToken, removeToken} from "@/main/cookiesJs";
+import router from "@/router/router";
 
 export default {
   name: "Staff",
@@ -248,13 +250,42 @@ export default {
     },
 
     // 单条月结
-    settle() {
-
+    settle(row) {
+      MessageBox.confirm('是否对' + row.name + '进行结算（工资：' + row.notPayAmount + '）', 'tip', {
+        confirmButtonText: '确定',
+        showClose: true,
+        showCancelButton: true,
+        closeOnClickModal: false,
+        type: 'info'
+      }).then(() => {
+        settleSingle(row.id).then(() => {
+          Message.success('对员工' + row.name + '结算成功');
+          this.fetchStaffInfos()
+        })
+      })
     },
 
     // 多条月结
     settleMulti() {
-
+      let selections = this.$refs.staffInfoTable.selection;
+      if (selections === undefined || selections.length === 0) {
+        Message.warning('请选择要结算工资的员工')
+        return
+      }
+      let staffIds = selections.map(selection => selection.id);
+      let staffNames = selections.map(selection => selection.name);
+      MessageBox.confirm('是否对' + staffNames + '进行结算', 'tip', {
+        confirmButtonText: '确定',
+        showClose: true,
+        showCancelButton: true,
+        closeOnClickModal: false,
+        type: 'info'
+      }).then(() => {
+        settleMulti(staffIds).then(() => {
+          Message.success('结算工资成功');
+          this.fetchStaffInfos()
+        })
+      })
     },
 
     // 新增Dialog关闭事件监听
