@@ -103,7 +103,7 @@
         fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="settle(scope.row)" :disabled="!scope.row.canSettle">工资结算</el-button>
-          <el-button type="text">查看</el-button>
+          <el-button type="text" @click="toStaffDetail(scope.row)">查看</el-button>
           <el-button type="text" @click="deleteSingle(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -301,6 +301,11 @@ export default {
           this.fetchStaffInfos()
         }
       })
+    },
+
+    // 查看 - 前往员工详情页
+    toStaffDetail(row) {
+      this.$router.push(`/staff/detail/` + row.id)
     }
   }
 }

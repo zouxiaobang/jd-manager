@@ -87,14 +87,14 @@ export function deleteMultiStaff(staffIds) {
 
 export function settleSingle(staffId) {
   return request({
-    url: `/staff/settle/single/${staffId}`,
+    url: `/settle/single/${staffId}`,
     method: 'put'
   })
 }
 
 export function settleMulti(staffIds) {
   return request({
-    url: '/staff/settle/multi',
+    url: '/settle/multi',
     method: 'put',
     data: staffIds
   })
@@ -102,10 +102,17 @@ export function settleMulti(staffIds) {
 
 export function settleBatch(staffId, amount) {
   return request({
-    url: `/staff/settle/batch/${staffId}`,
+    url: `/settle/batch/${staffId}`,
     method: 'put',
     params: {
       'amount': amount
     }
+  })
+}
+
+export function getSettleRecordByStaff(staffId) {
+  return request({
+    url: `/settle/record/${staffId}`,
+    method: 'get'
   })
 }

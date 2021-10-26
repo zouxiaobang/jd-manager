@@ -23,7 +23,7 @@
             <span v-for="item in staffInfo.roles" :key="item.role">
               <el-tag size="small" class="tag-item" effect="plain" type="info">{{item.roleCn}}</el-tag>
             </span>
-            <el-tag size="small" v-if="staffInfo.roles.length === 0" effect="plain" type="info">员工</el-tag>
+            <el-tag size="small" v-if="staffInfo.roles === undefined || staffInfo.roles.length === 0" effect="plain" type="info">员工</el-tag>
           </el-descriptions-item>
         </el-descriptions>
       </el-col>

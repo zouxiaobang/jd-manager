@@ -3,7 +3,7 @@
     <el-row class="row">
       <el-col :span="2" @click.native="goBack" v-show="showBack">
         <div class="col">
-          <i class="el-icon-top icon"></i>
+          <i class="el-icon-back icon"></i>
           返回
           <el-divider direction="vertical" class="divider"></el-divider>
         </div>

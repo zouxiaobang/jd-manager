@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import StaffInfoComponent from "@/components/StaffInfoComponent";
+import StaffInfoComponent from "@/components/staff/StaffInfoComponent";
 import {checkBatchStatus, fetchProductBatch, fetchProductInfos} from "@/api/product";
 import {fetchStaffInfo, addProductCountOfStaff} from "@/api/staff";
 import {Message, MessageBox} from "element-ui";
