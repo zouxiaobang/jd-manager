@@ -53,10 +53,13 @@ export default {
       type: Array,
       default: []
     },
+    total: {
+      type: Number,
+      default: 0
+    },
   },
   data() {
     return {
-      total: 0,
       currentPage: 1,
       pageSize: 10,
     }
@@ -71,13 +74,13 @@ export default {
     // 分页插件每页个数选择
     handleSizeChange(val) {
       this.pageSize = val;
-      this.$emit('onHandleSizeChange')
+      this.$emit('onHandleSizeChange', this.currentPage - 1, this.pageSize)
     },
 
     // 分页插件页数选择
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.$emit('onHandleCurrentChange')
+      this.$emit('onHandleCurrentChange', this.currentPage - 1, this.pageSize)
     },
   }
 }

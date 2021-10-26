@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 import staff from "@/mock/staff";
+import es from "element-ui/src/locale/lang/es";
 
 export function fetchStaffIntroductions(staffName, offset, limit) {
   return request({
@@ -110,9 +111,24 @@ export function settleBatch(staffId, amount) {
   })
 }
 
-export function getSettleRecordByStaff(staffId) {
+export function getSettleRecordByStaff(staffId, offset, limit) {
   return request({
     url: `/settle/record/${staffId}`,
-    method: 'get'
+    method: 'get',
+    params: {
+      'offset': offset,
+      'limit': limit
+    }
+  })
+}
+
+export function getWorkNotesByStaffId(staffId, offset, limit) {
+  return request({
+    url: `/staff/list/worknote/${staffId}`,
+    method: 'get',
+    params: {
+      'offset': offset,
+      'limit': limit
+    }
   })
 }
