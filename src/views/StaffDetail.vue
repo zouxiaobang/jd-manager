@@ -3,7 +3,11 @@
     <staff-info-component :staff-info="staffInfo" :show-empty="showEmpty"></staff-info-component>
     <el-row>
       <el-col :span="16">
-        <settle-record-table :settle-records="settleRecords"></settle-record-table>
+        <settle-record-table :settle-records="settleRecords"
+                             :total="totalNum"
+                             @onHandleSizeChange="onHandleSizeChange"
+                             @onHandleCurrentChange="onHandleCurrentChange">
+        </settle-record-table>
       </el-col>
       <el-col :span="8">
 
@@ -29,6 +33,7 @@ export default {
       staffInfo: {},
       showEmpty: false,
       settleRecords: [],
+      totalNum: 0,
     }
   },
 
@@ -54,10 +59,21 @@ export default {
 
     // 获取员工的结算流水列表
     fetchStaffSettleRecord() {
-      getSettleRecordByStaff(this.staffId).then(data => {
-        this.settleRecords = data || [];
+      getSettleRecordByStaff(this.staffId).then(page => {
+        this.totalNum = page.total;
+        this.settleRecords = this.totalNum > 0 ? page.content : [];
       })
-    }
+    },
+
+    // 分页插件每页个数选择
+    onHandleSizeChange() {
+      this.fetchStaffInfo();
+    },
+
+    // 分页插件页数选择
+    onHandleCurrentChange() {
+      this.fetchStaffInfo();
+    },
   }
 }
 </script>

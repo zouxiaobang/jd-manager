@@ -8,10 +8,9 @@
         type="index"
         width="50">
       </el-table-column>
-
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-descriptions :column="1" v-for="item in props.row.batchSettleResponses">
+          <el-descriptions :column="1" v-for="item in props.row.batchSettleResponses" :key="item.id">
             <el-descriptions-item>{{ item.batchMessage }}</el-descriptions-item>
           </el-descriptions>
         </template>
@@ -22,13 +21,25 @@
       </el-table-column>
       <el-table-column
         label="操作人"
-        prop="operator">
+        prop="operator"
+        width="120">
       </el-table-column>
       <el-table-column
         label="操作时间"
-        prop="lastModifiedTime">
+        prop="lastModifiedTime"
+        width="200">
       </el-table-column>
     </el-table>
+    <el-pagination
+      v-if="settleRecords && settleRecords.length !== 0 && total > pageSize"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 30, 40, 50]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -41,11 +52,30 @@ export default {
       default: []
     },
   },
+  data() {
+    return {
+      total: 0,
+      currentPage: 1,
+      pageSize: 10,
+    }
+  },
 
   methods: {
     // 设置是否显示展开按钮
     setClassName({row}) {
       return row.isBatchSettle ? '' : 'expand';
+    },
+
+    // 分页插件每页个数选择
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.$emit('onHandleSizeChange')
+    },
+
+    // 分页插件页数选择
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.$emit('onHandleCurrentChange')
     },
   }
 }
