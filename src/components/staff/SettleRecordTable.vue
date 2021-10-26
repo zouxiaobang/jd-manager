@@ -1,6 +1,8 @@
 <template>
   <div>
+    <p style="text-align: center;margin-top: 12px; font-weight: bold">员工结算流水表</p>
     <el-table
+      title=""
       :data="settleRecords"
       style="width: 100%"
       :row-class-name="setClassName">

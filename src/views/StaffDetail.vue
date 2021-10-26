@@ -2,15 +2,22 @@
   <div>
     <staff-info-component :staff-info="staffInfo" :show-empty="showEmpty"></staff-info-component>
     <el-row>
-      <el-col :span="16">
+      <el-col :span="15">
         <settle-record-table :settle-records="settleRecords"
                              :total="totalNum"
                              @onHandleSizeChange="onHandleSizeChange"
                              @onHandleCurrentChange="onHandleCurrentChange">
         </settle-record-table>
       </el-col>
-      <el-col :span="8">
-
+      <el-col :span="8" :offset="1">
+        <el-card shadow="hover">
+          <p>员工总工资：
+            <span class="tip-product-num">{{staffInfo.notPayAmount}}</span>元
+          </p>
+          <p>待结清工资：
+            <span class="tip-product-num">{{staffInfo.totalAmount}}</span>元
+          </p>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -79,5 +86,9 @@ export default {
 </script>
 
 <style scoped>
-
+.tip-product-num {
+  color: #409EFF;
+  font-size: 60px;
+  font-weight: bold;
+}
 </style>
