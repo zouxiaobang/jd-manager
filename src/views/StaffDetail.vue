@@ -20,7 +20,7 @@
         </el-card>
 
 
-        <el-button type="info" plain icon="el-icon-date" size="medium" style="margin-top: 12px" @click="fetchWorkNotes(0, 10)">工作笔记</el-button>
+        <el-button type="info" plain icon="el-icon-date" size="medium" style="margin-top: 12px" @click="openWorkNote">工作笔记</el-button>
       </el-col>
     </el-row>
     <staff-work-note :work-note-dialog-visible="workNoteDialogVisible"
@@ -89,12 +89,16 @@ export default {
 
     // 分页插件每页个数选择
     onSettleRecordHandleSizeChange(val) {
-      this.fetchStaffSettleRecord(val[0], val[1]);
+      this.fetchStaffSettleRecord(0, val[1]);
     },
 
     // 分页插件页数选择
     onSettleRecordHandleCurrentChange(val) {
       this.fetchStaffSettleRecord(val[0], val[1]);
+    },
+
+    openWorkNote() {
+      this.fetchWorkNotes(0, 10);
     },
 
     // 分页查看工作笔记
@@ -112,7 +116,7 @@ export default {
 
     // 分页插件每页个数选择
     onWorkNotesHandleSizeChange(val) {
-      this.fetchWorkNotes(val[0], val[1]);
+      this.fetchWorkNotes(0, val[1]);
     },
 
     // 分页插件页数选择
