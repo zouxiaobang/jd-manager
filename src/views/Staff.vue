@@ -226,6 +226,12 @@ export default {
 
     // 多条删除
     deleteMulti() {
+      let selections = this.$refs.staffInfoTable.selection;
+      if (selections.length === 0) {
+        Message.warning('请选择要删除的员工');
+        return;
+      }
+
       MessageBox.confirm('确认删除用户', 'tip', {
         confirmButtonText: '确定',
         showClose: true,
@@ -233,7 +239,6 @@ export default {
         closeOnClickModal: false,
         type: 'info'
       }).then(() => {
-        let selections = this.$refs.staffInfoTable.selection;
         let staffIds = selections.map(selection => selection.id);
         deleteMultiStaff(staffIds).then(() => {
           Message.success('删除员工成功');
