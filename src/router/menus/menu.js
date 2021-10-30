@@ -23,18 +23,11 @@ export const menuData = [
                 path: '/staff'
             },
             {
-                id: 22,
-                title: '菜单1-2',
-                icon: '',
-                key: '/menu12',
-                path: '/menu1_2'
-            },
-            {
                 id: 23,
-                title: '菜单1-3',
+                title: '公司管理',
                 icon: '',
-                key: '/menu13',
-                path: '/menu1_3'
+                key: '/company',
+                path: '/company'
             }
         ]
     }

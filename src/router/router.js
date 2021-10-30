@@ -7,6 +7,7 @@ import StaffHome from "@/views/StaffHome";
 import Staff from "@/views/Staff";
 import StaffCount from "@/views/StaffCount";
 import StaffDetail from "@/views/StaffDetail";
+import Company from "@/views/Company";
 
 
 Vue.use(VueRouter);
@@ -60,7 +61,6 @@ export const staticRoutes = [
               params: 'staffId'
             }
           },
-
           {
             path: '/staff/detail/:staffId',
             name: 'staffDetail',
@@ -70,6 +70,16 @@ export const staticRoutes = [
               params: 'staffId'
             }
           },
+          {
+            path: '/company',
+            name: 'company',
+            component: Company,
+            meta: {
+              title: '公司管理',
+              isFather: true
+            }
+          },
+
         ]
       }
     ],
