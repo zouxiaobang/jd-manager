@@ -26,7 +26,6 @@
     <staff-work-note :work-note-dialog-visible="workNoteDialogVisible"
                      :work-notes="workNotes"
                      :total="workNoteTotal"
-                     @onHandleSizeChange="onWorkNotesHandleSizeChange(arguments)"
                      @onHandleCurrentChange="onWorkNotesHandleCurrentChange(arguments)"
                      @onDialogClosed="onDialogClosed"></staff-work-note>
   </div>
@@ -112,11 +111,6 @@ export default {
         this.workNotes = page.content;
         this.workNoteDialogVisible = true;
       })
-    },
-
-    // 分页插件每页个数选择
-    onWorkNotesHandleSizeChange(val) {
-      this.fetchWorkNotes(0, val[1]);
     },
 
     // 分页插件页数选择

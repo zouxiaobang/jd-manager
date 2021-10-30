@@ -132,8 +132,6 @@ import {deleteMultiStaff, deleteStaffById, fetchStaffInfos, settleMulti, settleS
 import {Message, MessageBox} from "element-ui";
 import AdminDialog from "@/components/AdminDialog";
 import StaffAddForm from "@/components/staff/StaffAddForm";
-import {removeRefreshToken, removeToken} from "@/main/cookiesJs";
-import router from "@/router/router";
 
 export default {
   name: "Staff",

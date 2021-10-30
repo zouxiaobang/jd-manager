@@ -13,12 +13,10 @@
       </el-table>
       <el-pagination
         v-if="workNotes && workNotes.length !== 0 && total > pageSize"
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40, 50]"
         :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </el-dialog>
@@ -48,12 +46,6 @@ export default {
   },
 
   methods: {
-    // 分页插件每页个数选择
-    handleSizeChange(val) {
-      this.pageSize = val;
-      this.$emit('onHandleSizeChange', this.currentPage - 1, this.pageSize)
-    },
-
     // 分页插件页数选择
     handleCurrentChange(val) {
       this.currentPage = val;
