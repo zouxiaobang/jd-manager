@@ -54,7 +54,6 @@ export default {
 
     // 确认按钮
     confirm() {
-      console.log('onConfirmBtnClick')
       this.$emit('onConfirmBtnClick')
     }
   }
